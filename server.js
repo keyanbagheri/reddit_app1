@@ -17,6 +17,17 @@ var Article = require('./app/models/article');
 app.use(bodyParser.urlencoded({ extended: true })); // handle urleconded bodies; extended true means in any form (not just key-value pairs)
 app.use(bodyParser.json()); // only parsing json
 
+// param middleware is called before use middleware
+// use param to refactor findById code
+apiRouter.param('article_id', function(request, response, next, id) {
+  Article.findById(id, function(error, article) {
+    if (error) console.error('Could not update article b/c:', error);
+
+    request.article = article; // store article in request
+    next(); // callback to move onto next handler
+  });
+});
+
 // configure router middleware
 apiRouter.route('/articles')
 
@@ -40,24 +51,25 @@ apiRouter.route('/articles')
     });
   });
 
-apiRouter.route('/articles/:article_id')
+apiRouter.route('/article/:article_id')
+
+  .get(function(request, response) {
+    response.json(request.article);
+  })
 
   .patch(function(request, response) {
-    Article.findById(request.params.article_id, function(error, article) {
+    var data = request.body;
+    var article = request.article
+
+    Object.keys(data).forEach(function(key) {
+      article.set(key, data[key]); // set replaces the value of a field with the specified value
+    });
+
+    article.save(function(error) {
       if (error) console.error('Could not update article b/c:', error);
 
-      var data = request.body;
-
-      Object.keys(data).forEach(function(key) {
-        article.set(key, data[key]); // set replaces the value of a field with the specified value
-      });
-
-      article.save(function(error) {
-        if (error) console.error('Could not update article b/c:', error);
-
-        response.json({message: 'Article successfully updated'});
-      });
-    })
+      response.json({message: 'Article successfully updated'});
+    });
   })
 
   .delete(function(request, response) {
@@ -67,7 +79,6 @@ apiRouter.route('/articles/:article_id')
       response.json({message: 'Article successfully deleted'});
     })
   });
-  // });
 
 // apply router middleware
 // and give a namespace
