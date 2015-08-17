@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Schema = require mongoose.Schema; // allows us to create a constructor for our model
+var Schema = mongoose.Schema; // allows us to create a constructor for our model
 
 var ArticleSchema = new Schema({
   title: String, // define date types
@@ -14,3 +14,5 @@ ArticleSchema.pre('save', function(next){
   this.created_at = new Date();
   next();
 });
+
+module.exports = mongoose.model('Article', ArticleSchema);
