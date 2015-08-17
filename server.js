@@ -30,6 +30,14 @@ apiRouter.route('/articles')
 
       response.json({message: 'Article successfully created'});
     });
+  })
+
+  .get(function(request, response) {
+    Article.find(function(error, articles) {
+      if (error) console.error('Could not retrieve articles b/c:', error);
+
+      response.json(articles);
+    });
   });
 
 // apply router middleware
