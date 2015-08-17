@@ -26,7 +26,7 @@ apiRouter.route('/articles')
 
     // save the article
     article.save(function(error) {
-      if (error) console.error('Not able to create article.');
+      if (error) console.error('Not able to create article b/c:', error);
 
       response.json({message: 'Article successfully created'});
     });
@@ -39,6 +39,35 @@ apiRouter.route('/articles')
       response.json(articles);
     });
   });
+
+apiRouter.route('/articles/:article_id')
+
+  .patch(function(request, response) {
+    Article.findById(request.params.article_id, function(error, article) {
+      if (error) console.error('Could not update article b/c:', error);
+
+      var data = request.body;
+
+      Object.keys(data).forEach(function(key) {
+        article.set(key, data[key]); // set replaces the value of a field with the specified value
+      });
+
+      article.save(function(error) {
+        if (error) console.error('Could not update article b/c:', error);
+
+        response.json({message: 'Article successfully updated'});
+      });
+    })
+  })
+
+  .delete(function(request, response) {
+    Article.remove({ _id: request.params.article_id }, function(error) {
+      if (error) console.error('Could not delete article b/c:', error);
+
+      response.json({message: 'Article successfully deleted'});
+    })
+  });
+  // });
 
 // apply router middleware
 // and give a namespace
