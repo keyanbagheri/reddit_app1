@@ -8,15 +8,15 @@
 
   <!-- Angular -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
   <!-- scripts -->
   <script src="/app.js"></script>
 </head>
 <body ng-app="reddit">
 
-  <div ng-controller="redditController">
-    {{foo}}
-  </div>
+  <!-- this is where our partials are rendered; partial entry point -->
+  <ui-view></ui-view>
 
 </body>
 </html>
