@@ -5,8 +5,16 @@ var mongoose   = require('mongoose');
 
 app.use(express.static(__dirname + '/public'));
 
+// check which environment we're in
+// process.env.NODE_ENV === app.get('env')
 // connect to local database
-mongoose.connect('mongodb://localhost:27017/reddit');
+if ('development' === app.get('env')) {
+  mongoose.connect('mongodb://localhost:27017/reddit');
+}
+// connect to production database
+if ('production' === app.get('env')) {
+  mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/articles')
+}
 // listen for connection errors
 mongoose.connection.on('error', function(error) {
   console.error('Could not connect to MongoDB b/c:', error);
