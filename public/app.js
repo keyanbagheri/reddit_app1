@@ -13,7 +13,8 @@ angular.module('reddit', ['ui.router'])
 
     .state('new', {
       url: '/new',
-      templateUrl: './views/new.html'
+      templateUrl: './views/new.html',
+      controller: 'newArticleController'
     });
 
     // catchall
@@ -23,4 +24,11 @@ angular.module('reddit', ['ui.router'])
 
 .controller('redditController', ['$scope', function($scope) {
   $scope.foo = 'hehehe';
+}])
+
+.controller('newArticleController', ['$scope', '$http', function($scope, $http) {
+  $scope.createArticle = function() {
+    console.log('article:',$scope.article);
+    $http.post('/api/articles', $scope.article);
+  }
 }]);

@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema; // allows us to create a constructor for our model
 
 var ArticleSchema = new Schema({
-  title: String, // define date types
+  title: String, // define data types
   author: String,
   created_at: Date,
-  votes: Number
+  votes: Number,
+  content: String
 });
 
 // defines prehook for document
