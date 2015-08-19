@@ -28,6 +28,9 @@ var apiRouter = require('./app/config/routes');
 // and give a namespace
 app.use('/api', apiRouter);
 
-app.listen(3000); // tell the app to listen on port 3000
+// listen to port as defined or default 3000
+var port = process.env.PORT || 3000;
+
+app.listen(port); // tell the app to listen on port 3000
 
 console.log('Server is running on port 3000');
