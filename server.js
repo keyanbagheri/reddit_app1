@@ -3,6 +3,8 @@ var app = express(); // app is an instance of express
 var bodyParser = require('body-parser'); // express is an extremely minimalist framework so we need body-parser to help us handle req.body
 var mongoose   = require('mongoose');
 
+app.use(express.static(__dirname + '/public'));
+
 // connect to local database
 mongoose.connect('mongodb://localhost:27017/reddit');
 // listen for connection errors
@@ -14,7 +16,12 @@ mongoose.connection.on('error', function(error) {
 app.use(bodyParser.urlencoded({ extended: true })); // handle urleconded bodies; extended true means in any form (not just key-value pairs)
 app.use(bodyParser.json()); // only parsing json
 
-// bring in routes
+// this is the entry way into the client-side
+app.get('*', function(request, response) {
+  response.sendfile('./public/index.html');
+});
+
+// bring in API routes
 var apiRouter = require('./app/config/routes');
 
 // apply router middleware
