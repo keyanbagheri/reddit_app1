@@ -7,8 +7,14 @@ angular.module('reddit', ['ui.router'])
 
     .state('articles', {
       url: '/',
-      template: '<h3>View all the Articles</h3>'
+      templateUrl: './views/articles.html', // you can link to a view by using the property templateUrl opposed to template
+      controller: 'redditController' // connect to a controller by referring to its name
     })
+
+    .state('new', {
+      url: '/new',
+      templateUrl: './views/new.html'
+    });
 
     // catchall
    $urlRouterProvider.otherwise('/');
