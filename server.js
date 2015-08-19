@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // handle urleconded bodies;
 app.use(bodyParser.json()); // only parsing json
 
 // this is the entry way into the client-side
-app.get('*', function(request, response) {
-  response.sendfile('./public/index.html');
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/public/index.html');
 });
 
 // bring in API routes

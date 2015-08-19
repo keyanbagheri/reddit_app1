@@ -12,7 +12,7 @@ function articleById(request, response, next, id) {
 function create(request, response) {
   // create a new article based of user data
   var article = new Article(request.body);
-  console.log(article);
+
   // save the article
   article.save(function(error) {
     if (error) console.error('Not able to create article b/c:', error);

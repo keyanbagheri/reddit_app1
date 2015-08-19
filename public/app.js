@@ -22,13 +22,17 @@ angular.module('reddit', ['ui.router'])
 
 }])
 
-.controller('redditController', ['$scope', function($scope) {
-  $scope.foo = 'hehehe';
+.controller('redditController', ['$scope', '$http', function($scope, $http) {
+  $http.get('/api/articles')
+  .then(function(response) {
+    $scope.articles = response.data;
+    console.log('articles:',$scope.articles)
+  });
 }])
 
 .controller('newArticleController', ['$scope', '$http', function($scope, $http) {
   $scope.createArticle = function() {
-    console.log('article:',$scope.article);
+    console.log($scope.article)
     $http.post('/api/articles', $scope.article);
   }
 }]);
