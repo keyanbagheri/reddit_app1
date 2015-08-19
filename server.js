@@ -3,18 +3,14 @@ var app = express(); // app is an instance of express
 var bodyParser = require('body-parser'); // express is an extremely minimalist framework so we need body-parser to help us handle req.body
 var mongoose   = require('mongoose');
 
+// pull correct settings per environment
+var config = require('./app/config/config.js')
+var environmentSettings = config.config();
+
 app.use(express.static(__dirname + '/public'));
 
-// check which environment we're in
-// process.env.NODE_ENV === app.get('env')
-// connect to local database
-if ('development' === app.get('env')) {
-  mongoose.connect('mongodb://localhost:27017/reddit');
-}
-// connect to production database
-if ('production' === app.get('env')) {
-  mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/articles')
-}
+// connect to MongoDB
+mongoose.connect(environmentSettings.db);
 // listen for connection errors
 mongoose.connection.on('error', function(error) {
   console.error('Could not connect to MongoDB b/c:', error);
