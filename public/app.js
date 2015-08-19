@@ -15,6 +15,12 @@ angular.module('reddit', ['ui.router'])
       url: '/new',
       templateUrl: './views/new.html',
       controller: 'newArticleController'
+    })
+
+    .state('article', {
+      url: '/article/:id',
+      templateUrl: './views/article.html',
+      controller: 'articleController'
     });
 
     // catchall
@@ -26,13 +32,20 @@ angular.module('reddit', ['ui.router'])
   $http.get('/api/articles')
   .then(function(response) {
     $scope.articles = response.data;
-    console.log('articles:',$scope.articles)
   });
 }])
 
 .controller('newArticleController', ['$scope', '$http', function($scope, $http) {
   $scope.createArticle = function() {
-    console.log($scope.article)
     $http.post('/api/articles', $scope.article);
   }
+}])
+
+.controller('articleController', ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http) {
+  var id = $stateParams.id;
+
+  $http.get('/api/article/' + id)
+  .then(function(response) {
+    $scope.article = response.data;
+  });
 }]);

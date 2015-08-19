@@ -5,7 +5,9 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          {{article.title}}
+          <a ui-sref="article({id: article._id})">
+            {{article.title}}
+          </a>
         </h4>
       </div>
     </div>
