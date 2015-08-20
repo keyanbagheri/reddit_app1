@@ -1,7 +1,7 @@
 <div class="container">
   <h3>All Articles</h3>
 
-  <div ng-repeat="article in articles">
+  <div ng-repeat="article in articles | orderBy:'-votes'">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title form-inline">
@@ -10,9 +10,9 @@
             <h6>Pulished: {{article.created_at | date}}</h6>
           </a>
           <div class="form-group">
-            <p class="pull-right">{{votes}}</p>
-            <i class="fa fa-plus pull-left" ng-click="plusVote(article._id)"></i>
-            <i class="fa fa-minus pull-left" ng-click="minusVote(article._id)"></i>
+            <p class="pull-right">{{article.votes}}</p>
+            <i class="fa fa-plus-square pull-left" ng-click="plusVote(article)"></i>
+            <i class="fa fa-minus-square pull-left" ng-click="minusVote(article)"></i>
           </div>
         </h4>
       </div>

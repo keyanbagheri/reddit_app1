@@ -9,12 +9,14 @@ angular.module('reddit')
     $scope.articles = articles;
   });
 
-  $scope.plusVote = function(articleId) {
-    $scope.votes++;
+  $scope.plusVote = function(article) {
+    article.votes++;
+    apiService.update(article)
   };
 
-  $scope.minusVote = function() {
-    $scope.votes--;
+  $scope.minusVote = function(article) {
+    article.votes--;
+    apiService.update(article)
   };
 }])
 

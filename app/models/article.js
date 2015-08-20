@@ -5,7 +5,7 @@ var ArticleSchema = new Schema({
   title: String, // define data types
   author: String,
   created_at: Date,
-  votes: Number,
+  votes: {type:Number, default: 0},
   content: String
 });
 
