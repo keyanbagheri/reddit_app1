@@ -2,7 +2,8 @@
   "name": "reddit-style-app",
   "version": "0.0.1",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "drop": "node app/bin/db/drop.js"
   },
   "dependencies": {
     "body-parser": "^1.13.3",
