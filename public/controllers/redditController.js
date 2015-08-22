@@ -44,4 +44,9 @@ angular.module('reddit')
 
 .controller('favoritesController', ['$scope', 'favoriteService', function($scope, favoriteService) {
   $scope.favorites = favoriteService.favorites;
+
+  $scope.removeFavorite = function(index) {
+    favoriteService.favorites.splice(index, 1);
+  }
+
 }]);
