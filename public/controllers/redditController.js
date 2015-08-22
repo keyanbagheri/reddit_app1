@@ -1,6 +1,6 @@
 angular.module('reddit')
 
-.controller('redditController', ['$scope', '$http', 'apiService', function($scope, $http, apiService) {
+.controller('redditController', ['$scope', '$http', 'apiService', 'favoriteService', function($scope, $http, apiService, favoriteService) {
 
   $scope.votes = 0;
 
@@ -18,6 +18,11 @@ angular.module('reddit')
     article.votes--;
     apiService.update(article)
   };
+
+  $scope.favorite = function(article) {
+    favoriteService.saveFavorite(article);
+  }
+
 }])
 
 .controller('newArticleController', ['$scope', '$http', 'apiService', '$state', function($scope, $http, apiService, $state) {
