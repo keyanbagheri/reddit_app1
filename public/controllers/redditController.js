@@ -44,6 +44,4 @@ angular.module('reddit')
 
 .controller('favoritesController', ['$scope', 'favoriteService', function($scope, favoriteService) {
   $scope.favorites = favoriteService.favorites;
-
-  console.log($scope.favorites)
 }]);
