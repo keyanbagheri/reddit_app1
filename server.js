@@ -1,40 +1,56 @@
-var express = require('express'); // bring in express
-var app = express(); // app is an instance of express
-var bodyParser = require('body-parser'); // express is an extremely minimalist framework so we need body-parser to help us handle req.body
-var mongoose   = require('mongoose');
+var express = require('express'); // express module
+var app = express(); // defining our app as an instance of express
+var apiRouter = express.Router();
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var articlesController = require('./app/controllers/articlesController');
+var config = require('./app/config/config');
+var environmentSettings = config. config();
 
-// pull correct settings per environment
-var config = require('./app/config/config.js')
-var environmentSettings = config.config();
+mongoose.connect(environmentSettings.db)
+
+var Article = require('./app/models/Article');
+
+app.use(bodyParser.urlencoded( {extended: true}));
+app.use(bodyParser.json());
+
+apiRouter.route('/articles')
 
 app.use(express.static(__dirname + '/public'));
 
-// connect to MongoDB
-mongoose.connect(environmentSettings.db);
-// listen for connection errors
-mongoose.connection.on('error', function(error) {
-  console.error('Could not connect to MongoDB b/c:', error);
-});
+app.get('/', function(request, response){
+	response.sendfile('./public/views/index.html');
+})
 
-// configure body-parser so we can work with request.body
-app.use(bodyParser.urlencoded({ extended: true })); // handle urleconded bodies; extended true means in any form (not just key-value pairs)
-app.use(bodyParser.json()); // only parsing json
+	.post(function(request, response){
+		console.log(request.body);
+		var article = new Article(request.body);
 
-// this is the entry way into the client-side
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/public/index.html');
-});
+		article.save(function(error) {
+			if (error) console.error('Could not create b/c:', error);
 
-// bring in API routes
-var apiRouter = require('./app/config/routes');
+			response.json({message: 'Article successfully created'});
+		});
+	})
 
-// apply router middleware
-// and give a namespace
-app.use('/api', apiRouter);
+	.get(articlesController.index);
 
-// listen to port as defined or default 3000
-var port = process.env.PORT || 3000;
+apiRouter.route('/article/:article_id')
 
-app.listen(port); // tell the app to listen on port 3000
+// this is for getting a single resource
+	.get(articlesController.show)
 
-console.log('Server is running on port 3000');
+
+	.patch(articlesController.update);
+
+
+
+
+app.use(apiRouter);
+
+var port = process.env.PORT || 7000;
+
+app.listen(port);
+
+console.log('Server is running on port', port);
+

@@ -1,12 +1,7 @@
 {
-  "name": "reddit-style-app",
+  "name": "article-app",
   "version": "0.0.1",
-  "scripts": {
-    "start": "nodemon server.js",
-    "drop": "node app/bin/db/drop.js"
-  },
   "dependencies": {
-    "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "mongoose": "^4.1.3"
   }
