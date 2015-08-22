@@ -20,9 +20,11 @@ angular.module('reddit')
   };
 }])
 
-.controller('newArticleController', ['$scope', '$http', 'apiService', function($scope, $http, apiService) {
+.controller('newArticleController', ['$scope', '$http', 'apiService', '$state', function($scope, $http, apiService, $state) {
   $scope.createArticle = function() {
     apiService.create($scope.article);
+
+    $state.go('articles');
   }
 }])
 
