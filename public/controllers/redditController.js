@@ -40,4 +40,10 @@ angular.module('reddit')
   .then(function(article) {
     $scope.article = article
   })
+}])
+
+.controller('favoritesController', ['$scope', 'favoriteService', function($scope, favoriteService) {
+  $scope.favorites = favoriteService.favorites;
+
+  console.log($scope.favorites)
 }]);

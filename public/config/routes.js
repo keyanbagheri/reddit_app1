@@ -20,6 +20,12 @@ angular.module('reddit')
       url: '/article/:id',
       templateUrl: './views/article.html',
       controller: 'articleController'
+    })
+
+    .state('favorites', {
+      url: '/favorites',
+      templateUrl: './views/favorites.html',
+      controller: 'favoritesController'
     });
 
     // catchall
